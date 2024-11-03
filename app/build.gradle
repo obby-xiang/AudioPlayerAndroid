@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+def signingProperties = new Properties()
+def signingPropertiesFile = rootProject.file("signing.properties")
+if (signingPropertiesFile.exists()) {
+    signingProperties.load(new FileInputStream(signingPropertiesFile))
+}
+
 android {
     compileSdk 32
 
@@ -17,10 +23,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(property('signStoreFile'))
-            storePassword property('signStorePassword')
-            keyAlias property('signKeyAlias')
-            keyPassword property('signKeyPassword')
+            storeFile rootProject.file(signingProperties['storeFile'] ?: property('signing.storeFile'))
+            storePassword signingProperties['storePassword'] ?: property('signing.storePassword')
+            keyAlias signingProperties['keyAlias'] ?: property('signing.keyAlias')
+            keyPassword signingProperties['keyPassword'] ?: property('signing.keyPassword')
         }
     }
 
