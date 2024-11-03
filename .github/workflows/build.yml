@@ -1,10 +1,9 @@
-name: Android CI
+name: Android Build
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 env:
   SIGN_STORE_FILE: "${{ github.workspace }}/keystore.jks"
@@ -14,9 +13,8 @@ env:
 
 jobs:
   build:
-
+    name: Build Android
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: set up JDK 11
@@ -26,8 +24,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Create keystore
+    - name: Create Keystore File
       run: echo "${{ secrets.SIGN_STORE_BASE64 }}" | base64 --decode > "$SIGN_STORE_FILE"
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
@@ -36,3 +35,9 @@ jobs:
           -PsignStorePassword="$SIGN_STORE_PASSWORD" \
           -PsignKeyAlias="$SIGN_KEY_ALIAS" \
           -PsignKeyPassword="$SIGN_KEY_PASSWORD"
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifact
+        path: app/build/outputs/apk/release/app-release.apk
