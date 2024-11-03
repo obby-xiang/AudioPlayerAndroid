@@ -31,7 +31,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleRelease -PsignStoreFile="$SIGN_STORE_FILE" \
-                                     -PsignStorePassword="$SIGN_STORE_PASSWORD" \
-                                     -PsignKeyAlias="$SIGN_KEY_ALIAS" \
-                                     -PsignKeyPassword="$SIGN_KEY_PASSWORD"
+      run: |
+        ./gradlew assembleRelease -PsignStoreFile="$SIGN_STORE_FILE" \
+          -PsignStorePassword="$SIGN_STORE_PASSWORD" \
+          -PsignKeyAlias="$SIGN_KEY_ALIAS" \
+          -PsignKeyPassword="$SIGN_KEY_PASSWORD"
