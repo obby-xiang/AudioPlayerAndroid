@@ -31,7 +31,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: |
-          ./gradlew assembleRelease -Psigning.storeFile="$SIGNING_STORE_FILE" \
+          ./gradlew build -Psigning.storeFile="$SIGNING_STORE_FILE" \
             -Psigning.storePassword="$SIGNING_STORE_PASSWORD" \
             -Psigning.keyAlias="$SIGNING_KEY_ALIAS" \
             -Psigning.keyPassword="$SIGNING_KEY_PASSWORD"
