@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build Android
     env:
-      SIGNING_STORE_FILE: "${{ GITHUB_WORKSPACE }}/keystore.jks"
+      SIGNING_STORE_FILE: "${{ github.workspace }}/keystore.jks"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
